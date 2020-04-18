@@ -1,5 +1,4 @@
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM homeassistant/home-assistant:stable
 
 ENV \
     S6_SERVICES_GRACETIME=60000
@@ -8,6 +7,7 @@ WORKDIR /usr/src
 
 ## Setup Home Assistant
 COPY . homeassistant/
+COPY configuration.yaml config/
 RUN \
     pip3 install --no-cache-dir --no-index --only-binary=:all: --find-links "${WHEELS_LINKS}" \
         -r homeassistant/requirements_all.txt -c homeassistant/homeassistant/package_constraints.txt \
